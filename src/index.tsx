@@ -1,9 +1,19 @@
-import { Action, ActionPanel, List, Icon } from "@raycast/api";
+import {
+  Action,
+  ActionPanel,
+  List,
+  Icon,
+  getPreferenceValues,
+} from "@raycast/api";
 import { useEffect, useState } from "react";
 import groupBy from "lodash.groupby";
 import PokemonDetail from "./components/detail";
 
-import pokemon from "./pokemon.json";
+import pokemons from "./pokemon.json";
+
+const { language } = getPreferenceValues();
+
+const pokemon = pokemons.filter((p) => p.language_id === language);
 
 const listing = groupBy(pokemon, "generation");
 
@@ -15,6 +25,7 @@ type Pokemon = {
   id: number;
   name: string;
   types: string[];
+  type_names: string[];
   artwork: string;
   generation: string;
 };
@@ -80,7 +91,7 @@ export default function SearchPokemon() {
                 key={pokemon.id}
                 title={`#${pokemon.id.toString().padStart(3, "0")}`}
                 subtitle={pokemon.name}
-                accessoryTitle={pokemon.types.join(", ")}
+                accessoryTitle={pokemon.type_names.join(", ")}
                 accessoryIcon={`types/${pokemon.types[0]}.png`}
                 icon={{
                   source: pokemon.artwork,
