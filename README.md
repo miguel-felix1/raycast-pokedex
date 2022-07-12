@@ -29,7 +29,8 @@ This extension is made by [Anh Thang Bui](https://github.com/anhthang) and uses 
   - Moves
   - Abilities
 - [x] ⚙️ Preference
-  - Pokémon details by preferred language. Supported: English (default), French, German, Italian, Japanese, Korean, Spanish, Chinese (Simplified & Traditional).
+  - Language. Supported: English (default), French, German, Italian, Japanese, Korean, Spanish, Chinese (Simplified & Traditional).
+  - Pokémon Style: Official Artwork, Pokémon HOME, Pokémon Icon (Switch Style).
 
 ## TODO
 

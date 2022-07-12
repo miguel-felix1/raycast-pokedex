@@ -1,10 +1,19 @@
-import { Action, ActionPanel, Grid, Icon } from "@raycast/api";
+import {
+  Action,
+  ActionPanel,
+  getPreferenceValues,
+  Grid,
+  Icon,
+} from "@raycast/api";
 import { useMemo, useState } from "react";
 import groupBy from "lodash.groupby";
 import PokemonDetail from "./components/detail";
 import TypeDropdown from "./components/type_dropdown";
+import { getImage } from "./utils";
 
 import pokemons from "./statics/pokemons.json";
+
+const { style } = getPreferenceValues();
 
 export default function SearchPokemon() {
   const [type, setType] = useState<string>("all");
@@ -22,6 +31,7 @@ export default function SearchPokemon() {
       searchBarAccessory={
         <TypeDropdown type="grid" command="Pokémon" onSelectType={setType} />
       }
+      itemSize={style === "icon" ? Grid.ItemSize.Small : Grid.ItemSize.Medium}
     >
       {Object.entries(groupBy(listing, "generation")).map(
         ([generation, pokemonList]) => {
@@ -31,7 +41,7 @@ export default function SearchPokemon() {
                 return (
                   <Grid.Item
                     key={pokemon.id}
-                    content={pokemon.artwork}
+                    content={getImage(pokemon.id)}
                     title={pokemon.name}
                     subtitle={`#${pokemon.id.toString().padStart(3, "0")}`}
                     keywords={[pokemon.id.toString(), pokemon.name]}

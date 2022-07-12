@@ -78,6 +78,28 @@
           "value": "7"
         }
       ]
+    },
+    {
+      "name": "style",
+      "title": "Pokémon Style",
+      "description": "Your preferred Pokémon style in National dex.",
+      "required": false,
+      "type": "dropdown",
+      "default": "official-artwork",
+      "data": [
+        {
+          "title": "Official Artwork",
+          "value": "official-artwork"
+        },
+        {
+          "title": "Pokémon HOME",
+          "value": "home"
+        },
+        {
+          "title": "Pokémon Icon",
+          "value": "icon"
+        }
+      ]
     }
   ],
   "dependencies": {

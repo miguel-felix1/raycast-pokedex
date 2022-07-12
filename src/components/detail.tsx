@@ -16,8 +16,9 @@ import {
 } from "../types";
 import PokemonMoves from "./move";
 import PokedexEntries from "./dex";
+import { getImage } from "../utils";
 
-const { language } = getPreferenceValues();
+const { language, style } = getPreferenceValues();
 
 type SpeciesNameByLanguage = {
   [lang: string]: PokemonV2Pokemonspeciesname;
@@ -87,13 +88,6 @@ export default function PokemonDetail(props: { id?: number }) {
       {}
     );
   }, [pokemon]);
-
-  const formImg = (id: number, formId: number) => {
-    const name = formId
-      ? `${id.toString().padStart(3, "0")}_f${formId + 1}`
-      : id.toString().padStart(3, "0");
-    return `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${name}.png`;
-  };
 
   const evolutions = (species: PokemonV2PokemonspecyElement[]) => {
     const first = species.find((s) => !s.evolves_from_species_id);
@@ -203,7 +197,10 @@ export default function PokemonDetail(props: { id?: number }) {
           type: p.pokemon_v2_pokemontypes
             .map((n) => n.pokemon_v2_type.pokemon_v2_typenames[0].name)
             .join(", "),
-          img: formImg(pokemon.id, pIdx + fIdx),
+          img: getImage(
+            pokemon.id,
+            style === "official-artwork" ? pIdx + fIdx : f.form_name
+          ),
         });
       });
     });
@@ -243,7 +240,7 @@ export default function PokemonDetail(props: { id?: number }) {
         img: [
           {
             title: nameByLang[language].name,
-            source: `https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${pkmNumber}.png`,
+            source: getImage(pokemon.id),
           },
         ],
       },
@@ -323,9 +320,7 @@ export default function PokemonDetail(props: { id?: number }) {
               .map((specy) => {
                 return `![${
                   specy.pokemon_v2_pokemonspeciesnames[0].name
-                }](https://assets.pokemon.com/assets/cms2/img/pokedex/detail/${specy.id
-                  .toString()
-                  .padStart(3, "0")}.png)`;
+                }](${getImage(specy.id)})`;
               })
               .join(" "),
           })
